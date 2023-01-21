@@ -9,6 +9,7 @@ import Center from '../../shared/ui/Center';
 import Button from '@mui/material/Button';
 
 const ProjectItem = ({ projectItem }) => {
+    console.log(projectItem)
     const projectId = projectItem.id
     if (!projectItem) return
 
@@ -46,6 +47,7 @@ const ProjectItem = ({ projectItem }) => {
         <Card sx={{ minWidth: 345, }} style={{ background: '#FFD495' }}>
 
             <Title >{projectItem.projectName}</Title>
+            <Title >Submit Date:{projectItem.date}</Title>
 
             <div>
                 <Center><Button variant="outlined" onClick={handleClickOpen}>Create task</Button></Center>

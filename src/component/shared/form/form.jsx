@@ -4,25 +4,35 @@ import Label from '../ui/label'
 import TextInput from '../ui/textInput';
 import ErrorMessage from '../ui/errorMessageDiv';
 import Container from '../ui/container';
+
+import { useState } from 'react'
+
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+
 const Form = ({ handleClose, handleDispatch, state }) => {
 
+    const [value, setValue] = useState(null);
 
     const { register, formState: { errors }, handleSubmit } = useForm({
         mode: "onSubmit",
         defaultValues: state
     });
 
-
+    console.log(value)
+    const handleChange = (newValue) => {
+        setValue(newValue.toString())
+    };
 
     const onSubmit = (data) => {
-
+        data.date = value
         handleDispatch(data)
         handleClose()
 
     }
-
-
-
 
     return (
         <Container>
@@ -35,10 +45,16 @@ const Form = ({ handleClose, handleDispatch, state }) => {
                 {errors.projectName?.type === 'required' && <ErrorMessage role="alert"> Project Name is required</ErrorMessage>}
 
                 <Label>Project Date</Label>
-                <TextInput
-                    {...register("date", { required: true })}
-                    aria-invalid={errors.date ? "true" : "false"}
-                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <Stack spacing={3}>
+                        <DesktopDatePicker
+                            value={value}
+                            onChange={handleChange}
+                            inputFormat="MM/DD/YYYY"
+                            renderInput={(params) => <TextField {...params} />}
+                        />
+                    </Stack>
+                </LocalizationProvider>
                 {errors.date?.type === 'required' && <ErrorMessage role="alert"> Date is required</ErrorMessage>}
 
                 <Button >

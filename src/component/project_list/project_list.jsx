@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import ProjectItem from './project_item/Project_item'
 import { Stack } from "@mui/system";
 import Center from '../shared/ui/Center';
+
 const ProjectList = () => {
     const state = useSelector(state => state.projectReducer.projects)
 
