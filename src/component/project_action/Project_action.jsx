@@ -9,9 +9,9 @@ import Model from "../shared/model/index";
 import { useDispatch } from 'react-redux';
 import { addcase, editcase, deletecase } from '../../redux/feature/Slice';
 import { generate } from 'shortid';
+/// ui import 
 
 const ProjectAction = ({ projectAction, state }) => {
-
 
     const dispatch = useDispatch()
 
@@ -48,7 +48,10 @@ const ProjectAction = ({ projectAction, state }) => {
                         <Button variant="outlined" onClick={handleClickOpen}>Edit</Button>
                         <Button variant="outlined" onClick={handleDelete}>Delete</Button>
                     </Center> :
-                    <Center><Button variant="outlined" onClick={handleClickOpen}>Create</Button></Center>
+
+                    <Center>
+                        <Button variant="outlined" onClick={handleClickOpen}>Create</Button>
+                    </Center>
             }
             {
                 open ? <Model title={'Project'} handleClose={handleClose} open={open}>

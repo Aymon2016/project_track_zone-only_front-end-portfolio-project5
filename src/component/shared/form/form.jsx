@@ -22,7 +22,7 @@ const Form = ({ handleClose, handleDispatch, state }) => {
         defaultValues: state
     });
 
-    console.log(value)
+
     const handleChange = (newValue) => {
         setValue(newValue.toString())
     };

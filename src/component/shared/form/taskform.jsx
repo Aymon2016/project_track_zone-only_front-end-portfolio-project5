@@ -6,28 +6,26 @@ import Label from '../ui/label'
 import TextInput from '../ui/textInput';
 import ErrorMessage from '../ui/errorMessageDiv';
 import Container from '../ui/container';
+import { useDispatch } from 'react-redux';
+import { addcase } from '../../../redux/feature/EventSlice'
+const TaskForm = ({ create, handleClose, projectId }) => {
 
-const TaskForm = ({ create, handleClose, taskId, handleAllTask }) => {
-
-
+    const dispatch = useDispatch()
     const { register, formState: { errors }, handleSubmit } = useForm({
 
         defaultValues: {
             id: '',
             title: '',
+            projectId: projectId
         }
     });
 
 
 
     const onSubmit = (data) => {
-
         if (create) {
             data.id = generate()
-            handleAllTask(data)
-        } else {
-            states.id = taskId
-            handleAllTask(taskId, data)
+            dispatch(addcase(data))
         }
         handleClose()
     }

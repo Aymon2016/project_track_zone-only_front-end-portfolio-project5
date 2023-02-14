@@ -1,15 +1,18 @@
 import { useState } from 'react';
-import { Card } from '@mui/material';
 import ProjectAction from '../../project_action/Project_action';
-import TaskShowButton from '../../task/taskShowButton';
 import Model from '../../shared/model/index';
 import TaskForm from '../../shared/form/taskform'
 import Title from '../../shared/ui/title';
 import Center from '../../shared/ui/Center';
 import Button from '@mui/material/Button';
+import { ClockShow } from '../../shared/ui/cockdisplay'
+import { useSelector } from 'react-redux';
 
 const ProjectItem = ({ projectItem }) => {
-    console.log(projectItem)
+
+    const events = useSelector(state => state.EventSlice.Events.filter((items) => items.projectId == projectItem.id))
+
+
     const projectId = projectItem.id
     if (!projectItem) return
 
@@ -23,43 +26,27 @@ const ProjectItem = ({ projectItem }) => {
         setOpen(false);
     };
 
-    const [allTask, setAllTask] = useState([])
-
-
-    const handleAllTask = (data) => {
-        setAllTask([...allTask, data])
-    }
-
-    const handleDelete = (id) => {
-        const newAllTask = allTask.filter((task) => task.id !== id)
-        setAllTask(newAllTask)
-    }
-    const editTask = (id, data) => {
-        const edit = allTask.map((item) => {
-            if (item.id == id) {
-                item.id = data.id
-                item.title = data.title
-            }
-            return item
-        })
-    }
     return (
-        <Card sx={{ minWidth: 345, }} style={{ background: '#FFD495' }}>
+        <ClockShow >
 
             <Title >{projectItem.projectName}</Title>
-            <Title >Submit Date:{projectItem.date}</Title>
 
-            <div>
-                <Center><Button variant="outlined" onClick={handleClickOpen}>Create task</Button></Center>
-                <TaskShowButton editTask={editTask} handleDelete={handleDelete} allTask={allTask} />
-                {
-                    open ? <Model title={'Task'} open={open} handleClose={handleClose}>
-                        <TaskForm create={true} handleAllTask={handleAllTask} handleClose={handleClose} />
-                    </Model> : ''
-                }
-            </div>
+            <span >Submit Date:{projectItem.date}</span>
+
+            <Center><Button variant="outlined" onClick={handleClickOpen}>Create task</Button></Center>
+
+            {
+                events.map((item) => (
+                    <li style={{ listStyle: 'none' }} key={item.id}>{item.title}</li>
+                ))
+            }
+            {
+                open ? <Model title={'Task'} open={open} handleClose={handleClose}>
+                    <TaskForm projectId={projectId} create={true} handleClose={handleClose} />
+                </Model> : ''
+            }
             <ProjectAction state={projectItem} projectAction={true} />
-        </Card>
+        </ ClockShow>
     );
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import Section from '../shared/ui/section';
 import { useSelector } from 'react-redux'
 import ProjectItem from './project_item/Project_item'
-import { Stack } from "@mui/system";
+import { Row, Col } from 'react-bootstrap'
 import Center from '../shared/ui/Center';
 
 const ProjectList = () => {
@@ -12,13 +12,16 @@ const ProjectList = () => {
         <Section inputMargin="2em"  >
             {
                 state.length > 0 ? (
-                    <Stack direction={'row'} spacing={2}>
+                    <Row xs={1} md={3}>
                         {state.map((item) => (
-
-                            <ProjectItem key={item.id} projectItem={item} />
-
+                            <Col key={item.id} style={{
+                                minWidth: '345px',
+                                margin: "10px",
+                            }}>
+                                <ProjectItem projectItem={item} />
+                            </Col>
                         ))}
-                    </Stack>
+                    </Row>
                 )
                     : <Center>Please Create Any Project</Center>
             }
